@@ -16,7 +16,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "app_user")
+@Table(name = "voters")
 public class User extends AbstractBaseEntity<Long> {
 
     @Column(updatable = false,unique = true)
