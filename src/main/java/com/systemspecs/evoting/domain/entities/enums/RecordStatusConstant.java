@@ -1,4 +1,4 @@
-package com.systemspecs.evoting.entities.enums;
+package com.systemspecs.evoting.domain.entities.enums;
 
 public enum RecordStatusConstant {
     ACTIVE, INACTIVE, DELETED
