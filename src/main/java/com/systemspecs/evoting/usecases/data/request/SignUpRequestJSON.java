@@ -14,6 +14,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Data
@@ -33,7 +34,7 @@ public class SignUpRequestJSON {
     @NotBlank(message = "Please Enter your middle name")
     private String middleName;
 
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     private String phoneNumber;
 
@@ -54,7 +55,7 @@ public class SignUpRequestJSON {
                 .firstName(firstName)
                 .lastName(lastName)
                 .middleName(middleName)
-                .dateOfBirth(dateOfBirth)
+                .dateOfBirth(LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .phoneNumber(phoneNumber)
                 .gender(gender)
                 .roles(roles)

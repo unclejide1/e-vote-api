@@ -38,7 +38,7 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         }
 
         if(signUpRequest.getDateOfBirth() != null){
-            long age = LocalDate.now().until(signUpRequest.getDateOfBirth(), ChronoUnit.YEARS);
+            long age = LocalDate.now().getYear() - signUpRequest.getDateOfBirth().getYear();
             if(age < 18){
                 throw  new BusinessLogicConflictException("Must be above 18 to register on this platform");
             }
