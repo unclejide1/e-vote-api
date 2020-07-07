@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,6 +35,13 @@ public class GlobalErrorHandler {
     public ResponseEntity<ApiResponseJSON<String>> handleMissingServletRequestParameterException(Exception exception) {
         log.info("Exception: {}", exception.getLocalizedMessage());
         ApiResponseJSON<String> apiResponse = new ApiResponseJSON<>(exception.getLocalizedMessage());
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {BadCredentialsException.class})
+    public ResponseEntity<ApiResponseJSON<String>> handleBadCredentialsException(Exception exception) {
+        log.info("Exception: {}", exception.getLocalizedMessage());
+        ApiResponseJSON<String> apiResponse = new ApiResponseJSON<>(exception.getLocalizedMessage(), "invalid username or password");
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 

@@ -22,7 +22,6 @@ public class SignUpRequestJSON {
 
     @Email(message = "Username must be an email")
     @NotBlank(message = "Username is Required")
-    @Column(updatable = false,unique = true)
     private String username;
 
     @NotBlank(message = "Please Enter your first name")
