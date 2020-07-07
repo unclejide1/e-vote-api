@@ -45,7 +45,6 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         }
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
-        System.out.println(strRoles);
 
         if (strRoles == null) {
             Role userRole = roleDao.findByRole(ERole.ROLE_USER)
@@ -57,12 +56,10 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
                 if ("ADMIN".equals(role.toUpperCase())) {
                     Role adminRole = roleDao.findByRole(ERole.ROLE_ADMIN)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                    System.out.println("fail");
                     roles.add(adminRole);
                 } else {
                     Role userRole = roleDao.findByRole(ERole.ROLE_USER)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                    System.out.println("failed");
                     roles.add(userRole);
                 }
             });
