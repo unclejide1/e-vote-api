@@ -1,7 +1,9 @@
 package com.systemspecs.evoting.infrastructure.web.controllers.adminController;
 
 import com.systemspecs.evoting.infrastructure.models.ApiResponseJSON;
+import com.systemspecs.evoting.usecases.admin.CreateCandidateUseCase;
 import com.systemspecs.evoting.usecases.admin.CreateElectionUseCase;
+import com.systemspecs.evoting.usecases.data.request.CreateCandidateRequestJSON;
 import com.systemspecs.evoting.usecases.data.request.ElectionPeriodRequestJSON;
 import com.systemspecs.evoting.usecases.data.request.SignUpRequestJSON;
 import lombok.AllArgsConstructor;
@@ -24,10 +26,18 @@ import javax.validation.Valid;
 public class AdminController {
 
     private CreateElectionUseCase createElectionUseCase;
+    private CreateCandidateUseCase createCandidateUseCase;
 
     @PostMapping(value = "/create-election")
     public ResponseEntity<ApiResponseJSON<String>> createElection(@Valid @RequestBody ElectionPeriodRequestJSON requestJSON){
         String response = createElectionUseCase.createElection(requestJSON.toRequest());
+        ApiResponseJSON<String> apiResponseJSON = new ApiResponseJSON<>("Processed Sucessfully",response );
+        return new ResponseEntity<>(apiResponseJSON, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/create-candidate")
+    public ResponseEntity<ApiResponseJSON<String>> createCandidate(@Valid @RequestBody CreateCandidateRequestJSON requestJSON){
+        String response = createCandidateUseCase.createCandidate(requestJSON.toRequest());
         ApiResponseJSON<String> apiResponseJSON = new ApiResponseJSON<>("Processed Sucessfully",response );
         return new ResponseEntity<>(apiResponseJSON, HttpStatus.OK);
     }
