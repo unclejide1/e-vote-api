@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     List<Candidate> getAllByRecordStatusAndPoliticalPartyConstant(RecordStatusConstant recordStatusConstant, PoliticalPartyConstant politicalPartyConstant);
-    Optional<Candidate> findFirstByIdAndRecordStatus(Long id, RecordStatusConstant recordStatus);
+    Optional<Candidate> findFirstByCandidateIdAndRecordStatus(String candidateId, RecordStatusConstant recordStatus);
     Optional<Candidate> findByCandidateFullNameAndRecordStatus(String fullName, RecordStatusConstant recordStatusConstant);
-    Boolean existsByIdAndRecordStatus(Long id, RecordStatusConstant recordStatus);
+    Boolean existsByCandidateIdAndRecordStatus(String candidateId, RecordStatusConstant recordStatus);
 }
 

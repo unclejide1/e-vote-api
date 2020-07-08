@@ -5,6 +5,7 @@ import com.systemspecs.evoting.usecases.admin.CreateCandidateUseCase;
 import com.systemspecs.evoting.usecases.admin.CreateElectionUseCase;
 import com.systemspecs.evoting.usecases.data.request.CreateCandidateRequestJSON;
 import com.systemspecs.evoting.usecases.data.request.ElectionPeriodRequestJSON;
+import com.systemspecs.evoting.usecases.data.request.EnrolCandidateForElectionJSON;
 import com.systemspecs.evoting.usecases.data.request.SignUpRequestJSON;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,13 @@ public class AdminController {
     @PostMapping(value = "/create-candidate")
     public ResponseEntity<ApiResponseJSON<String>> createCandidate(@Valid @RequestBody CreateCandidateRequestJSON requestJSON){
         String response = createCandidateUseCase.createCandidate(requestJSON.toRequest());
+        ApiResponseJSON<String> apiResponseJSON = new ApiResponseJSON<>("Processed Sucessfully",response );
+        return new ResponseEntity<>(apiResponseJSON, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/enroll-candidate")
+    public ResponseEntity<ApiResponseJSON<String>> enrolCandidate(@Valid @RequestBody EnrolCandidateForElectionJSON requestJSON){
+        String response = createCandidateUseCase.enrollCandidateForElection(requestJSON.toRequest());
         ApiResponseJSON<String> apiResponseJSON = new ApiResponseJSON<>("Processed Sucessfully",response );
         return new ResponseEntity<>(apiResponseJSON, HttpStatus.OK);
     }

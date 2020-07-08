@@ -22,8 +22,8 @@ public class CandidateDaoImpl extends CrudDaoImpl<Candidate, Long> implements Ca
     }
 
     @Override
-    public Candidate getCandidateById(Long id) {
-        return findCandidateById(id).orElseThrow(() -> new RuntimeException("Not Found. Candidate with Id: " + id));
+    public Candidate getCandidateByCandidateId(String candidateId) {
+        return findCandidateByCandidateId(candidateId).orElseThrow(() -> new RuntimeException("Not Found. Candidate with Id: " + candidateId));
     }
 
     @Override
@@ -32,8 +32,8 @@ public class CandidateDaoImpl extends CrudDaoImpl<Candidate, Long> implements Ca
     }
 
     @Override
-    public Optional<Candidate> findCandidateById(Long id) {
-        return repository.findFirstByIdAndRecordStatus(id, RecordStatusConstant.ACTIVE);
+    public Optional<Candidate> findCandidateByCandidateId(String candidateId) {
+        return repository.findFirstByCandidateIdAndRecordStatus(candidateId, RecordStatusConstant.ACTIVE);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CandidateDaoImpl extends CrudDaoImpl<Candidate, Long> implements Ca
     }
 
     @Override
-    public Boolean existsById(Long id) {
-        return repository.existsByIdAndRecordStatus(id, RecordStatusConstant.ACTIVE);
+    public Boolean existsByCandidateId(String candidateId) {
+        return repository.existsByCandidateIdAndRecordStatus(candidateId, RecordStatusConstant.ACTIVE);
     }
 }

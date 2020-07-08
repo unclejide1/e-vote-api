@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -15,6 +16,11 @@ import javax.persistence.*;
 @Table(name = "candidates")
 public class Candidate extends AbstractBaseEntity<Long>{
 
+    @Column(unique =  true, updatable = false, nullable = false)
+    @NotBlank
+    private String candidateId;
+
+    @Column(unique =  true, updatable = false)
     private String candidateFullName;
 
     @Enumerated(EnumType.STRING)
