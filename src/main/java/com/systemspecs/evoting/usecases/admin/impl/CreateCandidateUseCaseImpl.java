@@ -60,9 +60,13 @@ public class CreateCandidateUseCaseImpl implements CreateCandidateUseCase {
         Candidate candidate = candidateDao.getCandidateByCandidateId(request.getCandidateId().toUpperCase());
         Election election = electionDao.findByElectionYear(electionYearConstant)
                 .orElseThrow(() -> new BadRequestException("no election found for this time frame"));
+        Boolean existsTimeFrame = electionCandidateDao.existsByCandidateAndTimeFrame(candidate, election);
         Boolean exists = electionCandidateDao.existsByCandidateAndPositionConstantAndTimeFrame(candidate, positionConstant, election);
+        if(existsTimeFrame){
+            throw new BusinessLogicConflictException("Candidate has already been enrolled for election in this time frame");
+        }
         if(exists){
-            throw new BusinessLogicConflictException("Candidate has already been profiled for election");
+            throw new BusinessLogicConflictException("Candidate has already been enrolled for election for this position in this time frame");
         }
 
         ElectionCandidate electionCandidate = ElectionCandidate.builder()

@@ -12,7 +12,10 @@ import java.util.Optional;
 public interface ElectionCandidateDao extends CrudDao<ElectionCandidate, Long> {
 
     Optional<ElectionCandidate> findElectionCandidateByElectionTimeFrame(Election timeFrame);
-    List<ElectionCandidate> getElectionCandidatesByPosition(PositionConstant positionConstant);
+    List<ElectionCandidate> getElectionCandidatesByPositionAndTimeFrame(PositionConstant positionConstant, Election timeFrame);
     Optional<ElectionCandidate> findElectionCandidateByCandidate(Candidate candidate);
+    Optional<ElectionCandidate> findElectionCandidateByCandidateAndElectionTimeFrame(Candidate candidate, Election timeFrame);
+    Boolean existsByCandidateAndTimeFrame(Candidate candidate, Election timeFrame);
     Boolean existsByCandidateAndPositionConstantAndTimeFrame(Candidate candidate, PositionConstant positionConstant, Election timeFrame);
+
 }

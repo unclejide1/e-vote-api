@@ -30,13 +30,23 @@ public class ElectionCandidateDaoImpl extends CrudDaoImpl<ElectionCandidate, Lon
     }
 
     @Override
-    public List<ElectionCandidate> getElectionCandidatesByPosition(PositionConstant positionConstant) {
-        return repository.getAllByRecordStatusAndPositionConstant(RecordStatusConstant.ACTIVE, positionConstant);
+    public List<ElectionCandidate> getElectionCandidatesByPositionAndTimeFrame(PositionConstant positionConstant, Election timeFrame) {
+        return repository.getAllByRecordStatusAndPositionConstantAndElectionTimeFrame(RecordStatusConstant.ACTIVE, positionConstant, timeFrame);
     }
 
     @Override
     public Optional<ElectionCandidate> findElectionCandidateByCandidate(Candidate candidate) {
         return repository.findFirstByCandidateAndRecordStatus(candidate, RecordStatusConstant.ACTIVE);
+    }
+
+    @Override
+    public Optional<ElectionCandidate> findElectionCandidateByCandidateAndElectionTimeFrame(Candidate candidate, Election timeFrame) {
+        return repository.findFirstByCandidateAndElectionTimeFrameAndRecordStatus(candidate, timeFrame, RecordStatusConstant.ACTIVE);
+    }
+
+    @Override
+    public Boolean existsByCandidateAndTimeFrame(Candidate candidate, Election timeFrame) {
+        return repository.existsByCandidateAndElectionTimeFrameAndRecordStatus(candidate, timeFrame, RecordStatusConstant.ACTIVE);
     }
 
     @Override
