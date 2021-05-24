@@ -16,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -60,9 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().frameOptions().sameOrigin()
                 .and().authorizeRequests()
-
-                .antMatchers("/api/v1/**").permitAll()
-//                .antMatchers(H2_URL).permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/v2/api-docs", "/webjars/**").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

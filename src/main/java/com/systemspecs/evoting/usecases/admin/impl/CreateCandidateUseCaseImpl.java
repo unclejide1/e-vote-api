@@ -17,19 +17,26 @@ import com.systemspecs.evoting.usecases.exceptions.BusinessLogicConflictExceptio
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Named;
 import java.util.Optional;
 
 @Slf4j
-@Named
-@AllArgsConstructor
+@Service
 public class CreateCandidateUseCaseImpl implements CreateCandidateUseCase {
 
     private CandidateDao candidateDao;
     private ElectionDao electionDao;
     private ElectionCandidateDao electionCandidateDao;
 
+    @Autowired
+    public CreateCandidateUseCaseImpl(CandidateDao candidateDao, ElectionDao electionDao, ElectionCandidateDao electionCandidateDao) {
+        this.candidateDao = candidateDao;
+        this.electionDao = electionDao;
+        this.electionCandidateDao = electionCandidateDao;
+    }
 
     @Override
     public String createCandidate(CreateCandidateRequest request) {

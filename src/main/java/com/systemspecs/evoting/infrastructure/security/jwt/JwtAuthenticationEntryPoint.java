@@ -1,5 +1,6 @@
 package com.systemspecs.evoting.infrastructure.security.jwt;
 
+import com.systemspecs.evoting.usecases.exceptions.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
@@ -19,7 +20,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse response,
                          AuthenticationException e) throws IOException, ServletException {
         logger.error("Unauthorized error: {}", e.getMessage());
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getLocalizedMessage());
 
     }
 }
