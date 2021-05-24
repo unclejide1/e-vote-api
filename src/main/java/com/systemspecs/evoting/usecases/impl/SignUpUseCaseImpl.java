@@ -38,14 +38,13 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         }
 
         if(signUpRequest.getDateOfBirth() != null){
-            long age = LocalDate.now().until(signUpRequest.getDateOfBirth(), ChronoUnit.YEARS);
+            long age = LocalDate.now().getYear() - signUpRequest.getDateOfBirth().getYear();
             if(age < 18){
                 throw  new BusinessLogicConflictException("Must be above 18 to register on this platform");
             }
         }
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
-        System.out.println(strRoles);
 
         if (strRoles == null) {
             Role userRole = roleDao.findByRole(ERole.ROLE_USER)
@@ -57,12 +56,10 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
                 if ("ADMIN".equals(role.toUpperCase())) {
                     Role adminRole = roleDao.findByRole(ERole.ROLE_ADMIN)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                    System.out.println("fail");
                     roles.add(adminRole);
                 } else {
                     Role userRole = roleDao.findByRole(ERole.ROLE_USER)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                    System.out.println("failed");
                     roles.add(userRole);
                 }
             });
