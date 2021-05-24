@@ -1,6 +1,6 @@
-package com.systemspecs.evoting.entities;
+package com.systemspecs.evoting.domain.entities;
 
-import com.systemspecs.evoting.entities.enums.RecordStatusConstant;
+import com.systemspecs.evoting.domain.entities.enums.RecordStatusConstant;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
