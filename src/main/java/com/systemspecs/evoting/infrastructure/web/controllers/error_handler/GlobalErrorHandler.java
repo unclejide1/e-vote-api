@@ -2,6 +2,7 @@ package com.systemspecs.evoting.infrastructure.web.controllers.error_handler;
 
 import com.systemspecs.evoting.infrastructure.models.ApiResponseJSON;
 import com.systemspecs.evoting.usecases.exceptions.*;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.Ordered;
@@ -27,7 +28,7 @@ public class GlobalErrorHandler {
     @ExceptionHandler(value = {RuntimeException.class, Exception.class})
     public ResponseEntity<ApiResponseJSON<String>> handleException(Exception exception) {
         log.info("Exception: {}", ExceptionUtils.getStackTrace(exception));
-        ApiResponseJSON<String> apiResponse = new ApiResponseJSON<>("Sorry, currently unable to process request at the moment.");
+        ApiResponseJSON<String> apiResponse = new ApiResponseJSON<>("Sorry, currently unable to process request at the moment.", exception.getMessage());
         return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -45,9 +46,16 @@ public class GlobalErrorHandler {
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = {ExpiredJwtException.class})
+    public ResponseEntity<ApiResponseJSON<String>> handleExpiredException(Exception exception) {
+        log.info("Exception: {}", exception.getLocalizedMessage());
+        ApiResponseJSON<String> apiResponse = new ApiResponseJSON<>(exception.getLocalizedMessage(), "Expired JWT");
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(value = AccessDeniedException.class)
     public ResponseEntity<ApiResponseJSON<Object>> handleUnauthorisedOperationException(AccessDeniedException exception) {
-        return new ResponseEntity<>(new ApiResponseJSON<>("Sorry, you don't have the required privilege for the request."), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new ApiResponseJSON<>("Sorry, you are not authorized to do this."), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = {MissingServletRequestPartException.class})

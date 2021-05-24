@@ -2,6 +2,7 @@ package com.systemspecs.evoting.infrastructure.security.jwt;
 
 import com.systemspecs.evoting.infrastructure.security.AuthenticatedUser;
 //import io.jsonwebtoken
+import com.systemspecs.evoting.usecases.exceptions.BadRequestException;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +45,13 @@ public class JwtUtils {
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
+            throw new BadRequestException("Sorry your token has an invalid jwt signature");
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
+            throw new BadRequestException("Sorry your token is malformed");
         } catch (ExpiredJwtException e) {
             logger.error("JWT token is expired: {}", e.getMessage());
+            throw new BadRequestException("Sorry your token has expired");
         } catch (UnsupportedJwtException e) {
             logger.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {

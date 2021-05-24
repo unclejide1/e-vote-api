@@ -1,6 +1,8 @@
-package com.systemspecs.evoting.usecases.data.request;
+package com.systemspecs.evoting.infrastructure.models;
 
 import com.systemspecs.evoting.domain.entities.enums.GenderTypeConstant;
+import com.systemspecs.evoting.usecases.data.request.SignUpRequest;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -20,29 +22,39 @@ import java.util.Set;
 @Data
 public class SignUpRequestJSON {
 
+    @ApiModelProperty(notes = "valid email", required = true)
     @Email(message = "Username must be an email")
     @NotBlank(message = "Username is Required")
     private String username;
 
+    @ApiModelProperty(notes = "first name", required = true)
     @NotBlank(message = "Please Enter your first name")
     private String firstName;
 
+    @ApiModelProperty(notes = "last name", required = true)
     @NotBlank(message = "Please Enter your last name")
     private String lastName;
 
+    @ApiModelProperty(notes = "middle name", required = true)
     @NotBlank(message = "Please Enter your middle name")
     private String middleName;
 
+    @ApiModelProperty(notes = "Format: dd/MM/yyyy", required = true)
+    @NotBlank(message = "Please Enter your date of birth")
     private String dateOfBirth;
 
+    @ApiModelProperty(notes = "phone number", required = true)
+    @NotBlank(message = "Please provide a phone number")
     private String phoneNumber;
 
+    @ApiModelProperty(notes = "Types: MALE,male,FEMALE,female", required = true)
     @Pattern(regexp = "(MALE|male|FEMALE|female)")
     private String gender;
 
 //    @Pattern(regexp = "(ADMIN|admin|USER|user)")
     private Set<String> roles;
 
+    @ApiModelProperty(notes = "password", required = true)
     @NotBlank(message = "password is required")
     private String password;
 

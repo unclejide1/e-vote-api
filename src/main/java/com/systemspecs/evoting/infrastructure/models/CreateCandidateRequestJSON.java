@@ -1,5 +1,7 @@
-package com.systemspecs.evoting.usecases.data.request;
+package com.systemspecs.evoting.infrastructure.models;
 
+import com.systemspecs.evoting.usecases.data.request.CreateCandidateRequest;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,13 +15,16 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class CreateCandidateRequestJSON {
 
-    @NotBlank(message = "Please enter your full name")
+    @ApiModelProperty(notes = "Candidate full name", required = true)
+    @NotBlank(message = "Please enter candidate full name")
     private String fullName;
 
+    @ApiModelProperty(notes = "Type: APC,apc,PDP,pdp,APGA,apga)", required = true)
     @Pattern(regexp = "(APC|apc|PDP|pdp|APGA|apga)")
     @NotBlank(message = "Please Provide your party")
     private String party;
 
+    @ApiModelProperty(notes = "description")
     @NotBlank(message = "Please give a description of yourself")
     private String description;
 

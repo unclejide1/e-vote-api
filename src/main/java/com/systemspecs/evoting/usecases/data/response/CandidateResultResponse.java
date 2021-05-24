@@ -2,11 +2,11 @@ package com.systemspecs.evoting.usecases.data.response;
 
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
 public class CandidateResultResponse {
 
     private String candidateName;
